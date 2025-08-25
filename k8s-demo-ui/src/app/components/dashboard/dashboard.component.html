@@ -1,0 +1,48 @@
+<div class="dashboard-container">
+  <h1>Kubernetes Demo Dashboard</h1>
+  
+  <mat-card class="section">
+    <mat-card-title>Timezone Information</mat-card-title>
+    <mat-card-content>
+      <p><strong>Timezone:</strong> {{timezoneData?.timezone}}</p>
+      <p><strong>Current Time:</strong> {{timezoneData?.currentTime}}</p>
+      <p><strong>Server Time (UTC):</strong> {{timezoneData?.serverTime}}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="section">
+    <mat-card-title>Secrets from Kubernetes</mat-card-title>
+    <mat-card-content>
+      <p><strong>API Key:</strong> {{secretData?.apiKey || 'Not set'}}</p>
+      <p><strong>DB Connection:</strong> {{secretData?.databaseConnection || 'Not set'}}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="section">
+    <mat-card-title>File Operations (EmptyDir Volume)</mat-card-title>
+    <mat-card-content>
+      <div class="file-form">
+        <mat-form-field>
+          <input matInput [(ngModel)]="newFile.fileName" placeholder="File Name">
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput [(ngModel)]="newFile.content" placeholder="Content"></textarea>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="createFile()">Create File</button>
+      </div>
+      
+      <h3>Existing Files:</h3>
+      <ul>
+        <li *ngFor="let file of files">{{file}}</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="section">
+    <mat-card-title>Health Checks</mat-card-title>
+    <mat-card-content>
+      <p><strong>Liveness Probe:</strong> {{healthStatus?.status}} ({{healthStatus?.timestamp}})</p>
+      <p><strong>Readiness Probe:</strong> {{readinessStatus?.status}} ({{readinessStatus?.timestamp}})</p>
+    </mat-card-content>
+  </mat-card>
+</div>
