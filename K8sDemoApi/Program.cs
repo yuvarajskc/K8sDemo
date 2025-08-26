@@ -8,13 +8,15 @@ builder.Services.AddControllers();
 // Add CORS policy to allow localhost:4200
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowLocalhost4200",
-        policy =>
-        {
-            policy.WithOrigins("https://scaling-carnival-rp4prprvj96fxrv7-4200.app.github.dev")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
+    options.AddPolicy("AllowKubernetes", policy =>
+    {
+        policy.WithOrigins(
+                "http://k8s-demo-ui",         // Kubernetes service name
+                "http://localhost:4200"       // For local development
+            )
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
 });
 
 builder.Services.AddEndpointsApiExplorer();
@@ -30,7 +32,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Use the CORS policy
-app.UseCors("AllowLocalhost4200");
+app.UseCors("AllowKubernetes");
 
 app.UseAuthorization();
 app.MapControllers();

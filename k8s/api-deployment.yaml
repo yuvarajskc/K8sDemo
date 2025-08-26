@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-demo-api
+  namespace: k8s-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-demo-api
+  template:
+    metadata:
+      labels:
+        app: k8s-demo-api
+    spec:
+      containers:
+      - name: k8s-demo-api
+        image: k8s-demo-api:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: timezone-config
+              key: TZ
+        - name: SECRET_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: api-key
+        - name: DB_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: db-connection
+        volumeMounts:
+        - name: empty-dir-storage
+          mountPath: /tmp/k8s-demo
+        - name: persistent-storage
+          mountPath: /app/data
+        livenessProbe:
+          httpGet:
+            path: /api/system/health
+            port: 80
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/system/ready
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: empty-dir-storage
+        emptyDir: {}
+      - name: persistent-storage
+        persistentVolumeClaim:
+          claimName: app-data-pvc

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: timezone-config
+  namespace: k8s-demo
+data:
+  TZ: "Europe/London"
