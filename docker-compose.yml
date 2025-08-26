@@ -1,0 +1,17 @@
+services:
+  k8s-demo-api:
+    image: k8s-demo-api:latest   # Use your local image tag
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - TZ=Europe/London
+      - SECRET_API_KEY=this-is-a-secret-api-key
+      - DB_CONNECTION_STRING=Server=localhost;Database=db;UserId=root;Password=secret
+
+  k8s-demo-ui:
+    image: k8s-demo-ui:latest    # Use your local image tag
+    ports:
+      - "8080:80"
+    depends_on:
+      - k8s-demo-api

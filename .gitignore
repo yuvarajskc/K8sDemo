@@ -55,9 +55,4 @@ $RECYCLE.BIN/
 *.swp
 *.swo
 
-# Docker
-**/Dockerfile
-**/docker-compose*
-docker-compose*.yml
-
 # End of file
