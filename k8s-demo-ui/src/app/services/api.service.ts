@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = 'https://scaling-carnival-rp4prprvj96fxrv7-5251.app.github.dev/api';
+  private baseUrl = environment.apiUrl;
 
   constructor() { }
 

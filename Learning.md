@@ -7,3 +7,6 @@
     path related error, not able to resolve it so instead of pointing the docker file directly point the image
 ### Angular docker build error
     docker using lower version of node js
+### Angular container running but showing nginx welcome screen
+    1. ngnix config not transfered properly with correct name it expect with name default.conf
+    2. environment file data not tranfered with production build because of not mentioned fileReplacements section in angular.json
